@@ -12,6 +12,7 @@ import { Inter } from 'next/font/google'
 import PaginationButtons from '@/components/PaginationButtons';
 
 // const inter = Inter({ subsets: ['latin'] })
+//test
 
 const postsPerPage = 5;
 
