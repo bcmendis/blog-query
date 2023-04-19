@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import '@testing-library/jest-dom'
 import PostSmall from "../components/UI/PostSmall"
-import { TEST_POST } from "./testData";
+import { TEST_POST } from "../lib/testData";
 
 describe("<Post />", () => {
 

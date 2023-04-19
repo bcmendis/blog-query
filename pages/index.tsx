@@ -33,12 +33,12 @@ export default function Home() {
 
   
   return (
-    <main className="flex flex-grow w-full flex-col items-center justify-between px-24 text-black dark:text-white">
-      {isLoading && !isError &&  <div>Loading...</div>}
+    <main className="flex flex-grow py-5 w-[90%] md:w-[70%] flex-col items-center justify-center text-black dark:text-white">
+      {isLoading && !isError && <div>Loading...</div>}
       {isError && <div>Error!</div>}
       {!isError && data && (
-        <div className="flex flex-col items-center justify-center w-full">
-          <div className="flex flex-col items-start justify-center w-full">
+        <div className="flex flex-col flex-grow items-center justify-center w-full h-full">
+          <div className="flex flex-grow flex-col items-start justify-center w-full gap-y-4">
             {paginatedData!.currentData().map((post) => {
               return <PostSmall key={post.id} post={post} />;
             })}

@@ -5,7 +5,7 @@ import {
   TEST_PAGINATION_A,
   TEST_PAGINATION_B,
   TEST_PAGINATION_C, 
-  TEST_PAGINATION_D } from "./testData"; 
+  TEST_PAGINATION_D } from "../lib/testData"; 
 
 describe("usePagination", () => {
   const data = TEST_PAGINATION_DATA;

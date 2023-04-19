@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
 import "@tanstack/react-query";
 import Home from "../pages/index";
-import {DUMMY_DATA} from './DUMMY_DATA'
+import { TEST_POST } from "../lib/testData";
 import usePagination from "../hooks/Pagination";
 
 jest.mock("@tanstack/react-query", () => ({
-  useQuery: jest.fn(() => ({ isLoading: false, data: DUMMY_DATA })),
+  useQuery: jest.fn(() => ({ isLoading: false, data: TEST_POST })),
 }));
 
 jest.mock("axios", () => ({
@@ -20,7 +20,7 @@ describe("<Home />", () => {
       nextPage: jest.fn(),
       prevPage: jest.fn(),
       pageClick: jest.fn(),
-      currentData: jest.fn(()=>[DUMMY_DATA]),
+      currentData: jest.fn(() => [TEST_POST]),
       currentPage: 1,
       totalPages: 1,
     });
