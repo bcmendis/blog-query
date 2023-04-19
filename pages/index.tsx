@@ -9,50 +9,48 @@ import getPosts from '@/utils/getPosts';
 
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import PaginationButtons from '@/components/PaginationButtons';
+import PaginationButtons from '@/components/UI/PaginationButtons';
+import usePagination from '@/hooks/Pagination';
+import PostSmall from '@/components/UI/PostSmall';
 
 // const inter = Inter({ subsets: ['latin'] })
-//test
 
 const postsPerPage = 5;
 
 export default function Home() {
-  const [page, setPage] = useState<Post[]>([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageRange, setPageRange] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { data } = useQuery<Post[]>({ queryKey: ['posts'], queryFn: getPosts });
+  const { data, isError, isLoading } = useQuery<Post[]>({ queryKey: ['posts'], queryFn: getPosts });
+ 
+  const paginatedData = usePagination(data!, postsPerPage);
+
+  const handlePageClick = (n: number)=>{
+    setCurrentPage(n);
+    if(paginatedData) {
+      paginatedData.pageClick(n);
+    }
+  };
+
   
-  useEffect(() => { 
-    if (data) {
-      setPageRange(Math.ceil(data.length / postsPerPage));
-      setPage(data?.slice(currentPage, (currentPage)+postsPerPage));
-    }
-  }, [data])
-
-  useEffect(() => {
-    if (data) {
-      setPage(data?.slice(currentPage*postsPerPage, (currentPage*postsPerPage)+postsPerPage));
-    }
-  }, [currentPage])
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <div className='flex flex-col items-start justify-center w-full'>
-        List Length: {data?.length}
-        Current Page: {currentPage}
-        {page?.map(post => {
-          return (
-          <div key={post.id}>
-          <b>{post.id}</b>
-          {post.title}:   
-          {post.createdAt}
+    <main className="flex flex-grow w-full flex-col items-center justify-between px-24 text-black dark:text-white">
+      {isLoading && !isError &&  <div>Loading...</div>}
+      {isError && <div>Error!</div>}
+      {!isError && data && (
+        <div className="flex flex-col items-center justify-center w-full">
+          <div className="flex flex-col items-start justify-center w-full">
+            {paginatedData!.currentData().map((post) => {
+              return <PostSmall key={post.id} post={post} />;
+            })}
           </div>
-          )
-        })}
-        <PaginationButtons pageCount={pageRange} handlePageClick={setCurrentPage}/>
-      </div>
+          <PaginationButtons
+            pageCount={paginatedData!.totalPages}
+            handlePageClick={handlePageClick}
+          />
+        </div>
+      )}
     </main>
-  )
+  );
 }
 
 export async function getServerSideProps() {
