@@ -20,6 +20,15 @@ const PostSmall = ({post}: IProps) => {
     setDate(new Date(post.createdAt).toDateString());
   }, [date, post.createdAt]);
 
+  const getFirstName = (name: string) => {
+    const nameArray = name.split(" ");
+    let firstName = name.split(" ")[0];
+    if (firstName.includes('.')) {
+      firstName = name.split(" ")[1]
+    }
+    return firstName;
+  }
+
   return (
     <div className="flex flex-row justify-center items-center w-full h-full p-4 text-sm lg:text-lg rounded-lg bg-slate-300 dark:bg-primaryDark ">
       <div className="flex flex-col justify-center items-center h-full w-1/2 md:w-1/4 px-2 text-center">
@@ -37,7 +46,7 @@ const PostSmall = ({post}: IProps) => {
                   alt={author.name}
                   className="rounded-full p-1 m-2 min-w-[5px] min-h-[5px] md:min-w-[50px] md:min-h-[50px]"
                 />
-                <span>{author.name.split(" ")[0]}</span>
+                <span>{getFirstName(author.name)}</span>
               </div>
             );
           })}
