@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 import {
   dehydrate,
   QueryClient,
@@ -6,14 +6,10 @@ import {
 } from '@tanstack/react-query'
 import { Post } from '@/types/post';
 import getPosts from '@/utils/getPosts';
-
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import PaginationButtons from '@/components/UI/PaginationButtons';
 import usePagination from '@/hooks/Pagination';
 import PostSmall from '@/components/UI/PostSmall';
 
-// const inter = Inter({ subsets: ['latin'] })
 
 const postsPerPage = 5;
 
