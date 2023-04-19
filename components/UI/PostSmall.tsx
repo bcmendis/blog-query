@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Post } from "@/types/post";
 import { BiComment, BiShare, BiLike } from "react-icons/bi";
 import Image from "next/image";
@@ -12,8 +12,13 @@ interface IProps {
 }
 
 const PostSmall = ({post}: IProps) => {
+  const [date, setDate] = useState('');
   const authors = post.authors;
   const comments = post.comments;
+
+  useEffect(() => {
+    setDate(new Date(post.createdAt).toDateString());
+  }, [date, post.createdAt]);
 
   return (
     <div className="flex flex-row justify-center items-center w-full h-full p-4 text-sm lg:text-lg rounded-lg bg-slate-300 dark:bg-primaryDark ">
@@ -38,7 +43,7 @@ const PostSmall = ({post}: IProps) => {
           })}
         </div>
         <div className="p-2 text-xs text-slate-700 dark:text-slate-400">
-          {new Date(post.createdAt).toDateString()}
+          {date}
         </div>
       </div>
       <div className="flex flex-col w-1/2 md:w-3/4 p-4 rounded-lg bg-slate-200 dark:bg-slate-600 overflow-hidden">
